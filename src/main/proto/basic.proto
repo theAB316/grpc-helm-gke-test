@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package com.basic;
+
+option java_package = "com.basic";
+option java_multiple_files = true;
+
+service BasicService {
+    rpc addDetails(DetailsRequest) returns (DetailsResponse) {}
+}
+
+// Send over basic details
+message DetailsRequest {
+    string name = 1;
+    int32 age = 2;
+    string emailId = 3;
+}
+
+message DetailsResponse {
+    // Returns true if successfully added
+    //         false if name already exists
+    bool success = 1;
+}

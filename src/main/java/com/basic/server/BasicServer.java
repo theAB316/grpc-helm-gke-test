@@ -15,7 +15,7 @@ public class BasicServer {
     public static void main(String[] args) throws InterruptedException, IOException {
         System.out.println("BasicServer has started...");
 
-        Server server = ServerBuilder.forPort(50051)
+        Server server = ServerBuilder.forPort(8080)
                 .addService(ServerInterceptors.intercept(new BasicServerImpl()))
                 .build();
 

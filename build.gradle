@@ -38,6 +38,19 @@ dependencies {
 archivesBaseName = "basic"
 version = "1.0"
 
+// Below block creates a "fat jar" - a jar that includes all necessary dependencies
+jar {
+    from {
+        // configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude "META-INF/*.SF"
+    exclude "META-INF/*.DSA"
+    exclude "META-INF/*.RSA"
+}
+
 test {
     useJUnitPlatform()
 }

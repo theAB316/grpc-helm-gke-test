@@ -1,0 +1,17 @@
+# We are using multi-stage Docker builds
+# This is only to build the jar using gradle
+FROM gradle:7.4-jdk18 AS TEMP_BUILD_IMAGE
+# Install gradle-protoc-plugin (reqd for creating the jar)
+RUN apt-get update -y && apt-get install -y gradle-plugin-protobuf
+COPY ./ /home/app/
+WORKDIR /home/app/
+RUN gradle clean build
+
+# Now the jar has been built.
+# We can build a fresh image from scratch (without gradle etc.)
+FROM openjdk:18-jdk
+EXPOSE 8080
+RUN mkdir -p /home/app
+COPY --from=TEMP_BUILD_IMAGE /home/app/build/libs/basic-1.0.jar /home/app/basic-1.0.jar
+WORKDIR /home/app
+ENTRYPOINT ["java", "-cp", "basic-1.0.jar", "com.basic.server.BasicClient"]

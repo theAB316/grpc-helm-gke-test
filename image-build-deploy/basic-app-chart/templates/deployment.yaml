@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # this is the deployment name
+  name: basic-server
+  labels:
+    app: basic-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      # deployment will manage pods named: basic-server
+      app: basic-server
+  template:
+    metadata:
+      labels:
+        app: basic-server
+    spec:
+      containers:
+        - name: basic-server
+          image: basic-server
+          ports:
+            - containerPort: 8080

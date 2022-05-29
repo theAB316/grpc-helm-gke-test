@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo ./build-upload.sh
+sudo ./image-build-deploy/build-upload.sh
